@@ -94,12 +94,18 @@ def ask_endpoint(request: AskRequest):
             answer=f"Dependencies not installed. Please ensure cohere and qdrant-client are available in your environment. Error: {str(e)}"
         )
 
-    # If we get here, dependencies are available, but we might not have the full API
-    # Return a message indicating that the service is ready but needs to be initialized
-    return AskResponse(
-        question=request.question,
-        answer="System initialized but knowledge base not accessible. The backend is properly configured with dependencies and environment variables."
-    )
+    # Dependencies and environment variables are available, try to use the full API
+    try:
+        # Import the full API implementation
+        from api import ask_endpoint as full_ask_endpoint
+        # Call the full implementation
+        return full_ask_endpoint(request)
+    except Exception as e:
+        # If there's an error with the full implementation, return a more informative message
+        return AskResponse(
+            question=request.question,
+            answer=f"Service is configured but unable to process request: {str(e)}"
+        )
 
 class QueryRequest(BaseModel):
     query: str
@@ -143,14 +149,20 @@ def query_endpoint(request: QueryRequest):
             total_chunks=0
         )
 
-    # If we get here, dependencies are available, but we might not have the full API
-    # Return a message indicating that the service is ready but needs to be initialized
-    return QueryResponse(
-        query=request.query,
-        response="System initialized but knowledge base not accessible. The backend is properly configured with dependencies and environment variables.",
-        sources=[],
-        total_chunks=0
-    )
+    # Dependencies and environment variables are available, try to use the full API
+    try:
+        # Import the full API implementation
+        from api import query_endpoint as full_query_endpoint
+        # Call the full implementation
+        return full_query_endpoint(request)
+    except Exception as e:
+        # If there's an error with the full implementation, return a more informative message
+        return QueryResponse(
+            query=request.query,
+            response=f"Service is configured but unable to process request: {str(e)}",
+            sources=[],
+            total_chunks=0
+        )
 
 @app.get("/collections")
 def get_collections():
