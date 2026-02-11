@@ -11,6 +11,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from typing import List, Dict, Any
 
@@ -19,6 +20,16 @@ app = FastAPI(
     title="RAG Chatbot API",
     description="API for querying the RAG knowledge base",
     version="1.0.0"
+)
+
+# Add CORS middleware - this is crucial for frontend integration
+frontend_origin = os.getenv("FRONTEND_ORIGIN", "https://hakhton-ai-textbook.vercel.app")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[frontend_origin, "https://hakhton-ai-textbook.vercel.app", "http://localhost:3000", "http://localhost:3001"],  # Allow your frontend origin and localhost for development
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 # Add basic routes that don't require external services

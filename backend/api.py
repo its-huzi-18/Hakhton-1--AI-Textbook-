@@ -56,9 +56,10 @@ app = FastAPI(
 )
 
 # Add CORS middleware
+frontend_origin = os.getenv("FRONTEND_ORIGIN", "https://hakhton-ai-textbook.vercel.app")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with specific origins
+    allow_origins=[frontend_origin, "https://hakhton-ai-textbook.vercel.app", "http://localhost:3000", "http://localhost:3001"],  # Allow your frontend origin and localhost for development
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

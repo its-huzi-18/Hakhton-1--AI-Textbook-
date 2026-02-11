@@ -3,6 +3,7 @@ Minimal Vercel-compatible FastAPI app
 This version avoids all external dependencies during build time
 """
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 import os
 import importlib.util
 
@@ -10,6 +11,16 @@ app = FastAPI(
     title="RAG Chatbot API - Minimal Version",
     description="Minimal API for Vercel deployment",
     version="1.0.0"
+)
+
+# Add CORS middleware - this is crucial for frontend integration
+frontend_origin = os.getenv("FRONTEND_ORIGIN", "https://hakhton-ai-textbook.vercel.app")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[frontend_origin, "https://hakhton-ai-textbook.vercel.app", "http://localhost:3000", "http://localhost:3001"],  # Allow your frontend origin and localhost for development
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 @app.get("/")
