@@ -69,7 +69,7 @@ def create_rag_chain():
     # Alternative: You can use OpenAI if you have an API key
     import os
     if os.getenv("OPENAI_API_KEY"):
-        from langchain_openai import OpenAI
+        from langchain_openai import OpenAI # type: ignore
         llm = OpenAI(temperature=0, openai_api_key=os.getenv("OPENAI_API_KEY"))
     else:
         # Using a lightweight Hugging Face model as fallback
