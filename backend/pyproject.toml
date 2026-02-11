@@ -9,7 +9,9 @@ dependencies = [
     "uvicorn==0.24.0",
     "python-dotenv==1.0.0",
     "cohere",
-    "qdrant-client"
+    "qdrant-client",
+    "requests",
+    "beautifulsoup4"
 ]
 
 [build-system]
