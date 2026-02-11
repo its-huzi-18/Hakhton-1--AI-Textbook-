@@ -5,11 +5,14 @@ description = "Backend for RAG Chatbot with Cohere and Qdrant integration"
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
-    "requests>=2.31.0",
-    "beautifulsoup4>=4.12.2",
-    "cohere>=4.4.3",
-    "qdrant-client>=1.8.0",
-    "python-dotenv>=1.0.0",
+    "requests==2.31.0",
+    "beautifulsoup4==4.12.2",
+    "cohere==4.4.3",
+    "qdrant-client==1.8.0",
+    "python-dotenv==1.0.0",
+    "fastapi==0.104.1",
+    "uvicorn[standard]==0.24.0",
+    "pydantic==1.10.13"
 ]
 
 [build-system]
@@ -19,3 +22,6 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["backend*"]
+
+[project.scripts]
+start = "api:app"

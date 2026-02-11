@@ -60,3 +60,18 @@ python main.py
 - `embed()`: Generates embeddings for text chunks
 - `create_collection()`: Creates a Qdrant collection
 - `save_chunk_to_qdrant()`: Saves text chunks and embeddings to Qdrant
+
+## Deploying to Vercel
+
+To deploy this FastAPI application to Vercel:
+
+1. Make sure you have the Vercel CLI installed: `npm i -g vercel`
+2. Log in to your Vercel account: `vercel login`
+3. Run `vercel` in this directory to deploy
+4. Configure the required environment variables in the Vercel dashboard:
+   - COHERE_API_KEY
+   - QDRANT_URL
+   - QDRANT_API_KEY
+   - TARGET_URL (optional, defaults to https://hakhton-ai-textbook.vercel.app/)
+
+The application should now be deployed and accessible via the URL provided by Vercel.
