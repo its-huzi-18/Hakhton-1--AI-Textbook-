@@ -165,6 +165,44 @@ The chatbot is automatically integrated into the Docusaurus website through the 
 4. Add tests if applicable
 5. Submit a pull request
 
+## Troubleshooting
+
+### Common Connection Issues
+
+**Issue**: Chrome console shows error `your-deployed-backend-url.com/ask:1 Failed to load resource: net::ERR_NAME_NOT_RESOLVED`
+
+**Cause**: The frontend is trying to connect to the default placeholder URL instead of the actual backend URL.
+
+**Solution**: 
+1. For local development: Make sure the backend is running on `http://localhost:8000`
+2. For deployment: Set the environment variables during the build process:
+   ```bash
+   # For Vercel deployment
+   RAG_CHATBOT_API_URL=https://your-actual-backend-url.com
+   NEXT_PUBLIC_RAG_CHATBOT_API_URL=$RAG_CHATBOT_API_URL
+   ```
+
+### Environment Variables for Frontend Deployment
+
+When deploying the frontend (Docusaurus site), ensure these environment variables are set:
+
+- `RAG_CHATBOT_API_URL`: The URL of your deployed backend (e.g., `https://your-backend.onrender.com`)
+- `NEXT_PUBLIC_RAG_CHATBOT_API_URL`: Same as above (needed for Next.js/Docusaurus to expose to client)
+
+### Understanding the Different Environment Variables
+
+There are two different sets of environment variables that serve different purposes:
+
+**Backend variables** (set in backend deployment):
+- `FRONTEND_ORIGIN`: Tells the backend which frontend URLs are allowed to make requests (for CORS)
+
+**Frontend variables** (set in frontend deployment):
+- `RAG_CHATBOT_API_URL`: Tells the frontend which backend URL to send requests to
+
+These serve opposite directions in the communication flow:
+- `FRONTEND_ORIGIN` (backend) → controls who can call the backend
+- `RAG_CHATBOT_API_URL` (frontend) → controls where the frontend sends requests
+
 ## License
 
 [Add your license here]
