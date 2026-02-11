@@ -75,3 +75,5 @@ To deploy this FastAPI application to Vercel:
    - TARGET_URL (optional, defaults to https://hakhton-ai-textbook.vercel.app/)
 
 The application should now be deployed and accessible via the URL provided by Vercel.
+
+After successful deployment, you can enhance the API with full functionality by adding back the additional dependencies.
