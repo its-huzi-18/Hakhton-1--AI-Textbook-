@@ -6,7 +6,7 @@ async function testBackendConnection() {
     console.log('Testing backend connection...');
     
     // Use the same logic as in the frontend
-    const backendUrl = window.BACKEND_ORIGIN|| 'http://localhost:8000';
+    const backendUrl = window.BACKEND_ORIGIN|| 'https://hakhton-1-ai-textbook-backend.vercel.app/';
     console.log(`Using backend URL: ${backendUrl}`);
     
     try {
