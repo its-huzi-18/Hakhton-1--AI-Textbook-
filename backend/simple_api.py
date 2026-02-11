@@ -191,6 +191,51 @@ def get_collections():
     except Exception as e:
         return {"error": f"Error connecting to Qdrant: {str(e)}"}
 
+@app.post("/initialize-knowledge-base")
+def initialize_knowledge_base():
+    """Endpoint to initialize the knowledge base by processing the book content"""
+    # Check if environment variables are set
+    missing_vars = []
+    if not os.getenv("COHERE_API_KEY"):
+        missing_vars.append("COHERE_API_KEY")
+    if not os.getenv("QDRANT_URL"):
+        missing_vars.append("QDRANT_URL")
+    if not os.getenv("QDRANT_API_KEY"):
+        missing_vars.append("QDRANT_API_KEY")
+    if not os.getenv("TARGET_URL"):
+        missing_vars.append("TARGET_URL")
+
+    if missing_vars:
+        return {"error": f"Missing environment variables: {missing_vars}"}
+
+    # Check if dependencies are available
+    try:
+        import cohere
+        import qdrant_client
+    except ImportError as e:
+        return {"error": f"Dependencies not installed: {str(e)}"}
+
+    try:
+        # Import and run the process_book function
+        from process_book import process_book
+        import threading
+        
+        # Run the process_book function in a separate thread to avoid timeout
+        def run_process():
+            try:
+                process_book()
+                print("Knowledge base initialization completed successfully!")
+            except Exception as e:
+                print(f"Error during knowledge base initialization: {str(e)}")
+        
+        thread = threading.Thread(target=run_process)
+        thread.daemon = True
+        thread.start()
+        
+        return {"message": "Knowledge base initialization started. This may take several minutes depending on your content size."}
+    except Exception as e:
+        return {"error": f"Error initializing knowledge base: {str(e)}"}
+
 # This is the entry point that Vercel will use
 application = app
 
