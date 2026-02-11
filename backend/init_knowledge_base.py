@@ -7,6 +7,10 @@ Run this script after deploying your backend and frontend
 import os
 import sys
 import time
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 # Add the backend directory to Python path
 backend_dir = os.path.dirname(os.path.abspath(__file__))
@@ -20,15 +24,18 @@ def initialize_knowledge_base():
     missing_vars = []
     
     for var in required_vars:
-        if not os.getenv(var):
+        value = os.getenv(var)
+        if not value:
             missing_vars.append(var)
+        else:
+            print(f"✓ {var} is set")
     
     if missing_vars:
-        print(f"ERROR: Missing environment variables: {missing_vars}")
-        print("Please set all required environment variables before running this script.")
+        print(f"\nERROR: Missing environment variables: {missing_vars}")
+        print("Please set all required environment variables in your .env file before running this script.")
         return False
     
-    print("✓ All environment variables are set")
+    print("\n✓ All environment variables are set")
     
     # Import and run the process_book function
     try:
@@ -36,9 +43,9 @@ def initialize_knowledge_base():
         from process_book import process_book
         print("✓ Successfully imported process_book")
         
-        print("Starting book processing...")
+        print("\nStarting book processing...")
         process_book()
-        print("✓ Knowledge base initialization completed successfully!")
+        print("\n✓ Knowledge base initialization completed successfully!")
         return True
         
     except ImportError as e:
@@ -47,6 +54,8 @@ def initialize_knowledge_base():
         return False
     except Exception as e:
         print(f"ERROR: Failed to initialize knowledge base: {e}")
+        import traceback
+        traceback.print_exc()
         return False
 
 if __name__ == "__main__":
@@ -61,7 +70,7 @@ if __name__ == "__main__":
     else:
         print("\n❌ Initialization failed. Please check the error messages above.")
         print("Make sure:")
-        print("- All environment variables are set correctly")
+        print("- All environment variables are set correctly in the .env file")
         print("- Your frontend is deployed and accessible")
         print("- You're running this script from the backend directory")
     

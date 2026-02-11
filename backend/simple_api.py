@@ -7,6 +7,10 @@ import os
 import sys
 from pydantic import BaseModel
 from typing import List, Dict, Any
+from dotenv import load_dotenv
+
+# Load environment variables
+load_dotenv()
 
 app = FastAPI(
     title="RAG Chatbot API - Simple Version",

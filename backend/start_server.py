@@ -3,9 +3,14 @@
 Start script for the RAG Chatbot API
 This script checks if the knowledge base is populated before starting the API server.
 """
+from dotenv import load_dotenv
 import os
 import uvicorn
 import logging
+
+# Load environment variables
+load_dotenv()
+
 from api import app
 
 # Set up logging

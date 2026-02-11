@@ -4,6 +4,7 @@ RAG Chatbot API Implementation
 This script provides API endpoints for querying the RAG knowledge base.
 """
 
+from dotenv import load_dotenv
 import os
 import logging
 from typing import List, Dict, Any
@@ -15,7 +16,6 @@ from qdrant_client import QdrantClient
 from qdrant_client.http.models import SearchRequest
 from qdrant_client.http import models
 import uvicorn
-from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
