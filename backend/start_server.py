@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Start script for the RAG Chatbot API on Railway
+Start script for the RAG Chatbot API
 This script checks if the knowledge base is populated before starting the API server.
 """
 import os

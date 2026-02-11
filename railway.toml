@@ -1,4 +1,4 @@
-# Railway configuration for the backend
+# Deployment configuration for the backend
 [build]
   builder = "NIXPACKS"
   workdir = "backend"

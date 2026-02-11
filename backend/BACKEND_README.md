@@ -85,19 +85,15 @@ For deployment instructions, see [DEPLOYMENT_GUIDE.md](./DEPLOYMENT_GUIDE.md).
 
 ## Free Hosting Options
 
-### Railway
+### Vercel (Recommended)
+- Great for frontend-backend combinations
+- Easy environment variable management
 - Free tier available
-- Easy GitHub integration
-- Environment variable support
 
 ### Render
 - Free tier available
 - Simple deployment process
 - Auto-deploys from GitHub
-
-### Vercel
-- Great for frontend-backend combinations
-- Easy environment variable management
 
 ## Troubleshooting
 

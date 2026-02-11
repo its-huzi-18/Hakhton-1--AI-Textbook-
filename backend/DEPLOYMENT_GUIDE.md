@@ -76,20 +76,14 @@ Response:
 
 ## Deployment Options
 
-### Option 1: Railway (Free Tier)
+### Option 1: Vercel (Recommended)
 
-1. Install Railway CLI or use the web dashboard
-2. Connect to your GitHub repository
-3. Create a new project
-4. Set the following build command:
-   ```
-   pip install -r requirements.txt
-   ```
-5. Set the start command:
-   ```
-   python start_api.py
-   ```
-6. Add your environment variables in the Railway dashboard
+1. Go to vercel.com and create an account
+2. Import your project from GitHub
+3. During project setup, select the `/backend` directory as the root
+4. Set the framework preset to "Python"
+5. Add your environment variables in the Vercel dashboard
+6. Deploy!
 
 ### Option 2: Render (Free Tier)
 
@@ -105,14 +99,6 @@ Response:
    uvicorn api:app --host 0.0.0.0 --port $PORT
    ```
 6. Add your environment variables in Render dashboard
-
-### Option 3: Vercel (Python support)
-
-1. Go to vercel.com and create an account
-2. Import your project from GitHub
-3. Set the framework preset to "Python"
-4. Add your environment variables
-5. Deploy!
 
 ## Environment Variables
 

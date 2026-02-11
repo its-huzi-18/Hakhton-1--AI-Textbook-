@@ -24,7 +24,7 @@ TARGET_URL=https://your-frontend-domain.vercel.app
 
 Before deploying the backend, you must populate your Qdrant vector database with the book content:
 
-1. Deploy the backend temporarily to a local environment or Railway with the environment variables set
+1. Deploy the backend temporarily to a local environment with the environment variables set
 2. Run the `process_book.py` script to populate your Qdrant database:
    ```bash
    cd backend

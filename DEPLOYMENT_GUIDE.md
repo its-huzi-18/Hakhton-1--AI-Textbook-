@@ -1,39 +1,6 @@
 # Deployment Guide for RAG Chatbot
 
-## Backend Deployment Options
-
-### Option A: Railway (Recommended for initial setup)
-
-#### Prerequisites
-- Railway account
-- Access to Qdrant vector database
-- Cohere API key
-
-#### Environment Variables Required
-Set these environment variables in your Railway project:
-
-```
-QDRANT_API_KEY=your_qdrant_api_key
-QDRANT_URL=your_qdrant_url
-COHERE_API_KEY=your_cohere_api_key
-TARGET_URL=https://your-frontend-url.vercel.app  # The URL of your deployed frontend
-PORT=8000
-```
-
-#### Deployment Steps
-1. Connect your GitHub repository to Railway
-2. Set the environment variables as listed above
-3. Railway will automatically use the `railway.toml` configuration
-4. The backend will be deployed and accessible at the Railway URL
-
-#### Populate Knowledge Base (Required)
-After the first deployment, you need to populate the knowledge base:
-1. Run the `process_book.py` script once to populate the vector database:
-   ```bash
-   python process_book.py
-   ```
-
-### Option B: Vercel (For production backend)
+## Backend Deployment (Vercel)
 
 #### Prerequisites
 - Vercel account
@@ -49,14 +16,23 @@ COHERE_API_KEY=your_cohere_api_key
 QDRANT_URL=your_qdrant_cluster_url (e.g., https://your-cluster-id.region.cloud.qdrant.io:6333)
 QDRANT_API_KEY=your_qdrant_api_key
 TARGET_URL=https://your-frontend-domain.vercel.app
+FRONTEND_ORIGIN=https://your-frontend-domain.vercel.app
+PORT=8000
 ```
 
 #### Deployment Steps
-1. Push your updated code to GitHub (with the corrected requirements.txt)
+1. Push your updated code to GitHub
 2. Connect your repository to Vercel
 3. During project setup, select the `/backend` directory as the root
 4. Set the environment variables in Vercel dashboard
 5. Redeploy from the Vercel dashboard
+
+#### Populate Knowledge Base (Required)
+After the first deployment, you need to populate the knowledge base:
+1. Run the `process_book.py` script once to populate the vector database:
+   ```bash
+   python process_book.py
+   ```
 
 ## Frontend Deployment (Vercel)
 
@@ -67,9 +43,7 @@ TARGET_URL=https://your-frontend-domain.vercel.app
 Set these environment variables in your Vercel project for the frontend:
 
 ```
-RAG_CHATBOT_API_URL=https://your-backend-url.vercel.app  # If backend is on Vercel
-# OR
-RAG_CHATBOT_API_URL=https://your-backend-url.up.railway.app  # If backend is on Railway
+RAG_CHATBOT_API_URL=https://your-actual-backend-url.vercel.app  # Your deployed backend URL
 NEXT_PUBLIC_RAG_CHATBOT_API_URL=${RAG_CHATBOT_API_URL}
 ```
 

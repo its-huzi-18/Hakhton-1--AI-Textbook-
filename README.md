@@ -149,6 +149,8 @@ Send this to the `/ask` endpoint, or use the more detailed format with the `/que
 
 The chatbot is automatically integrated into the Docusaurus website through the plugin in `docusaurus.config.ts`. The chatbot appears as a floating button on all pages and allows users to ask questions about the book content directly from the website.
 
+**Important**: For the chatbot to answer book-related questions, the knowledge base must be populated first by running `python backend/process_book.py`. This script will scrape content from your book website (defined by the `TARGET_URL` environment variable) and store it in the vector database.
+
 ## API Endpoints
 
 - `GET /` - Health check
@@ -202,6 +204,20 @@ There are two different sets of environment variables that serve different purpo
 These serve opposite directions in the communication flow:
 - `FRONTEND_ORIGIN` (backend) → controls who can call the backend
 - `RAG_CHATBOT_API_URL` (frontend) → controls where the frontend sends requests
+
+### Critical: Setting Frontend Environment Variables for Deployment
+
+For the deployed frontend to connect to your backend, you MUST set these environment variables during the build process:
+
+```bash
+# For your specific deployment
+RAG_CHATBOT_API_URL=https://hakhton-1-ai-textbook-backend.vercel.app
+NEXT_PUBLIC_RAG_CHATBOT_API_URL=https://hakhton-1-ai-textbook-backend.vercel.app
+```
+
+**Without these variables set during build/deployment, the frontend will default to `http://localhost:8000` and fail to connect.**
+
+On Vercel, set these in your project settings under "Environment Variables".
 
 ## License
 
