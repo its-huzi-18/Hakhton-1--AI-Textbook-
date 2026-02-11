@@ -73,7 +73,7 @@ if full_api:
     # We'll add them directly to this app
     from pydantic import BaseModel
     from typing import List, Dict, Any
-    
+
     class QueryRequest(BaseModel):
         query: str
         top_k: int = 5
@@ -122,7 +122,7 @@ else:
     # If full API is not available, provide informative endpoints
     from pydantic import BaseModel
     from typing import List, Dict, Any
-    
+
     class QueryRequest(BaseModel):
         query: str
         top_k: int = 5
@@ -150,7 +150,7 @@ else:
             missing_vars.append("QDRANT_URL")
         if not os.getenv("QDRANT_API_KEY"):
             missing_vars.append("QDRANT_API_KEY")
-        
+
         if missing_vars:
             return QueryResponse(
                 query=request.query,
@@ -159,28 +159,12 @@ else:
                 total_chunks=0
             )
 
-        # Check if dependencies are available
-        try:
-            import cohere
-            import qdrant_client
-            # If we reach here, dependencies are available but the full API wasn't loaded
-            # This means the issue is with loading the full API module
-            from api import query_endpoint as full_query_endpoint
-            return full_query_endpoint(request)
-        except ImportError as e:
-            return QueryResponse(
-                query=request.query,
-                response=f"Dependencies not installed. Please ensure cohere and qdrant-client are available in your environment. Error: {str(e)}",
-                sources=[],
-                total_chunks=0
-            )
-        except Exception as e:
-            return QueryResponse(
-                query=request.query,
-                response=f"Service temporarily unavailable: {str(e)}",
-                sources=[],
-                total_chunks=0
-            )
+        return QueryResponse(
+            query=request.query,
+            response="Dependencies not installed. Please ensure cohere and qdrant-client are available in your environment.",
+            sources=[],
+            total_chunks=0
+        )
 
     @app.post("/ask", response_model=AskResponse)
     def ask_endpoint(request: AskRequest):
@@ -198,24 +182,10 @@ else:
                 answer=f"Service not configured. Missing environment variables: {missing_vars}. Please set all required environment variables in your deployment platform."
             )
 
-        # Check if dependencies are available
-        try:
-            import cohere
-            import qdrant_client
-            # If we reach here, dependencies are available but the full API wasn't loaded
-            # This means the issue is with loading the full API module
-            from api import ask_endpoint as full_ask_endpoint
-            return full_ask_endpoint(request)
-        except ImportError as e:
-            return AskResponse(
-                question=request.question,
-                answer=f"Dependencies not installed. Please ensure cohere and qdrant-client are available in your environment. Error: {str(e)}"
-            )
-        except Exception as e:
-            return AskResponse(
-                question=request.question,
-                answer=f"Service temporarily unavailable: {str(e)}"
-            )
+        return AskResponse(
+            question=request.question,
+            answer="Dependencies not installed. Please ensure cohere and qdrant-client are available in your environment."
+        )
 
 # This is the entry point that Vercel will use
 application = app
